@@ -1,4 +1,4 @@
-# cond-gan-ranking
+# cond-imp-gan-ranking
 
 
 This repository accompanies the paper, "Extended Missing Data Imputation via GANs for Ranking Applications", in proceedings of Journal of Data Mining and Knowledge Discovery.
