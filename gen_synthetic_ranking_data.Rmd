@@ -1,0 +1,47 @@
+---
+title: "gen_synthetic_ranking_data"
+output: html_document
+---
+
+Nov 1, 2019
+
+Generating a synthetic ranking dataset with various data distributions.
+
+```{r}
+#Set Parameters
+Categories = c("Books", "Furniture", "Beauty", "Clothes", "Electronics")
+gaussian_mu = c(0, 1, 2, 3, 4)
+gaussian_sigma = c(1, 1, 1, 1, 1)
+lnorm_mu = c(2, 1.5, 1, 0.5, 0)
+lnorm_sigma = c(1, 1, 1, 1, 1)
+exponential_lambda = c(0.5, 1, 1.5, 2, 2.5)
+poisson_lambda = c(2, 4, 6, 8, 10)
+unif_max = c(5, 10, 20, 40, 50)
+
+gen_ranking = as.list(1:5)
+
+for (i in 1:5){
+  n_querygroups = 2000
+  n_results = 64
+  df = matrix(NA, nrow=n_querygroups*n_results, ncol= 5)
+  set.seed(2021)
+  df[, 1] = rnorm(nrow(df), mean=gaussian_mu[i], gaussian_sigma[i])
+  df[, 2] = rlnorm(nrow(df), mean=lnorm_mu[i], lnorm_sigma[i])
+  df[, 3] = rexp(nrow(df), rate=exponential_lambda[i])
+  df[, 4] = rpois(nrow(df), lambda=poisson_lambda[i])
+  df[, 5] = runif(nrow(df), min=0, max=unif_max[i])
+  
+  Category = rep(Categories[i], times=n_querygroups*n_results)
+  QID = rep(paste(Categories[i], 1:n_querygroups, sep=""), each=n_results)
+  ProductID = rep(1:64, times=n_querygroups)
+  QProductID = paste(QID, ProductID, sep = "-")
+  
+  fullDF = cbind(Category, QID, ProductID, QProductID, df)
+  fullDF = data.frame(fullDF)
+  gen_ranking[[i]] = fullDF
+}
+
+rankingDF <- do.call("rbind", gen_ranking)
+write.csv(rankingDF, row.names = FALSE, file="synthetic_ranking_data.csv")
+```
+
