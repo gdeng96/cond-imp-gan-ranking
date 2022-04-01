@@ -1,7 +1,7 @@
 # cond-imp-gan-ranking
 
 
-This repository accompanies the paper, "Extended Missing Data Imputation via GANs for Ranking Applications", in proceedings of Journal of Data Mining and Knowledge Discovery.
+This repository accompanies the paper, "Extended Missing Data Imputation via GANs for Ranking Applications" (https://arxiv.org/abs/2011.02089) in proceedings of Journal of Data Mining and Knowledge Discovery.
 
 
 ### Citations
